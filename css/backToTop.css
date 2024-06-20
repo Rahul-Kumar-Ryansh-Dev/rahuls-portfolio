@@ -24,8 +24,8 @@
 
 .progress-wrap::after {
 	position: absolute;
-	content: "\f176";
-	font-family: "Font Awesome 5 Pro";
+	/* content: "\f176";
+	font-family: "Font Awesome 6 Free"; */
 	text-align: center;
 	line-height: 46px;
 	font-size: 20px;
@@ -41,8 +41,22 @@
 	transition: all 200ms linear;
 }
 
-.progress-wrap svg path {
-	fill: none;
+.arrow_up {
+	fill: var(--tj-theme-primary);
+	font-size: 30px;
+	position: absolute;
+	left: 13.3px;
+	top: 7px;
+	z-index: 999;
+	width: 20px;
+	height: 30px;
+}
+
+/* .progress-wrap svg {
+	fill: transparent;
+} */
+.progress-circle {
+	fill: transparent;
 }
 
 .progress-wrap svg.progress-circle path {
