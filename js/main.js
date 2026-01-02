@@ -1,419 +1,313 @@
-/***************************************************
-==================== JS INDEX ======================
-****************************************************
-// Data js
-// Sidebar Navigation
-// Sticky Header
-// Hamburger Menu
-// Scroll To Section
-// OnePage Active Class
-// Portfolio Filter
-// Portfolio Gallery Carousel
-// Testimonial Carousel
-// Nice Select
-// ALL Popup
-// Preloader
-// Sidebar Hover BG Color
-// Services Hover BG
-// Portfolio Filter BG Color
-// Funfact
-// WoW Js
-
-****************************************************/
-
 (function ($) {
-  "use strict";
-
-  /*------------------------------------------------------
-  /  Data js
-  /------------------------------------------------------*/
-  $("[data-bg-image]").each(function () {
-    $(this).css(
-      "background-image",
-      "url(" + $(this).attr("data-bg-image") + ")"
-    );
-  });
-
-  $("[data-bg-color]").each(function () {
-    $(this).css("background-color", $(this).attr("data-bg-color"));
-  });
-
-  $(document).ready(function ($) {
-    /*------------------------------------------------------
-  	/  Sticky Header
-  	/------------------------------------------------------*/
-    var lastScrollTop = 0;
-    $(window).scroll(function () {
-      var scroll = $(window).scrollTop();
-
-      if (scroll > 300) {
-        $(".tj-header-area.header-sticky").addClass("sticky");
-        $(".tj-header-area.header-sticky").removeClass("sticky-out");
-      } else if (scroll < lastScrollTop) {
-        if (scroll < 500) {
-          $(".tj-header-area.header-sticky").addClass("sticky-out");
-          $(".tj-header-area.header-sticky").removeClass("sticky");
-        }
-      } else {
-        $(".tj-header-area.header-sticky").removeClass("sticky");
-      }
-
-      lastScrollTop = scroll;
-    });
-
-    /*------------------------------------------------------
-  	/  Hamburger Menu
-  	/------------------------------------------------------*/
-    $(".menu-bar").on("click", function () {
-      $(".menu-bar").toggleClass("menu-bar-toggeled");
-      $(".header-menu").toggleClass("opened");
-      $("body").toggleClass("overflow-hidden");
-    });
-
-    $(".header-menu ul li a").on("click", function () {
-      $(".menu-bar").removeClass("menu-bar-toggeled");
-      $(".header-menu").removeClass("opened");
-      $("body").removeClass("overflow-hidden");
-    });
-
-    /*------------------------------------------------------
-  	/  OnePage Active Class
-  	/------------------------------------------------------*/
-    $(".header-menu nav ul").onePageNav({
-      currentClass: "current-menu-ancestor",
-      changeHash: false,
-      easing: "swing",
-    });
-
-    /*------------------------------------------------------
-  	/  Portfolio Filter
-  	/------------------------------------------------------*/
-    $(".portfolio-box").imagesLoaded(function () {
-      var $grid = $(".portfolio-box").isotope({
-        // options
-        masonry: {
-          columnWidth: ".portfolio-box .portfolio-sizer",
-          gutter: ".portfolio-box .gutter-sizer",
-        },
-        itemSelector: ".portfolio-box .portfolio-item",
-        percentPosition: true,
-      });
-
-      // filter items on button click
-      $(".filter-button-group").on("click", "button", function () {
-        $(".filter-button-group button").removeClass("active");
-        $(this).addClass("active");
-
-        var filterValue = $(this).attr("data-filter");
-        $grid.isotope({ filter: filterValue });
-      });
-    });
-
-    /*------------------------------------------------------
-  	/  Portfolio Gallery Carousel
-  	/------------------------------------------------------*/
-    $(".portfolio_gallery.owl-carousel").owlCarousel({
-      items: 2,
-      loop: true,
-      lazyLoad: true,
-      center: true,
-      // autoWidth: true,
-      autoplayHoverPause: true,
-      autoplay: false,
-      autoplayTimeout: 5000,
-      smartSpeed: 800,
-      margin: 30,
-      nav: false,
-      dots: true,
-      responsive: {
-        // breakpoint from 0 up
-        0: {
-          items: 1,
-          margin: 0,
-        },
-        // breakpoint from 768 up
-        768: {
-          items: 2,
-          margin: 20,
-        },
-        992: {
-          items: 2,
-          margin: 30,
-        },
-      },
-    });
-
-    /*------------------------------------------------------
-  	/ Testimonial Carousel
-  	/------------------------------------------------------*/
-    $(".testimonial-carousel.owl-carousel").owlCarousel({
-      loop: true,
-      margin: 30,
-      nav: false,
-      dots: true,
-      autoplay: false,
-      active: true,
-      smartSpeed: 1000,
-      autoplayTimeout: 7000,
-      responsive: {
-        0: {
-          items: 1,
-        },
-        600: {
-          items: 2,
-        },
-        1000: {
-          items: 2,
-        },
-      },
-    });
-
-    /*------------------------------------------------------
-  	/ Post Gallery Carousel
-  	/------------------------------------------------------*/
-    $(".tj-post__gallery.owl-carousel").owlCarousel({
-      items: 1,
-      loop: true,
-      margin: 30,
-      dots: false,
-      nav: true,
-      navText: [
-        '<i class="fal fa-arrow-left"></i>',
-        '<i class="fal fa-arrow-right"></i>',
-      ],
-      autoplay: false,
-      smartSpeed: 1000,
-      autoplayTimeout: 3000,
-    });
-    /*------------------------------------------------------
-  	/ Brand Slider
-  	/------------------------------------------------------*/
-    if ($(".brand-slider").length > 0) {
-      var brand = new Swiper(".brand-slider", {
-        slidesPerView: 6,
-        spaceBetween: 30,
-        loop: false,
-        breakpoints: {
-          320: {
-            slidesPerView: 2,
-          },
-          576: {
-            slidesPerView: 3,
-          },
-          640: {
-            slidesPerView: 3,
-          },
-          768: {
-            slidesPerView: 4,
-          },
-          992: {
-            slidesPerView: 5,
-          },
-          1024: {
-            slidesPerView: 6,
-          },
-        },
-      });
-    }
-
-    /*------------------------------------------------------
-  	/  Nice Select
-  	/------------------------------------------------------*/
-    $("select").niceSelect();
-
-    /*------------------------------------------------------
-  	/  ALL Popup
-  	/------------------------------------------------------*/
-    if ($(".popup_video").length > 0) {
-      $(`.popup_video`).lightcase({
-        transition: "elastic",
-        showSequenceInfo: false,
-        slideshow: false,
-        swipe: true,
-        showTitle: false,
-        showCaption: false,
-        controls: true,
-      });
-    }
-
-    $(".modal-popup").magnificPopup({
-      type: "inline",
-      fixedContentPos: false,
-      fixedBgPos: true,
-      overflowY: "auto",
-      closeBtnInside: true,
-      preloader: false,
-      midClick: true,
-      removalDelay: 300,
-      mainClass: "popup-mfp",
-    });
-  });
-
-  $(window).on("load", function () {
-    /*------------------------------------------------------
-  	/  WoW Js
-  	/------------------------------------------------------*/
-    var wow = new WOW({
-      boxClass: "wow", // default
-      animateClass: "animated", // default
-      offset: 100, // default
-      mobile: true, // default
-      live: true, // default
-    });
-    wow.init();
-
-    /*------------------------------------------------------
-  	/  Preloader
-  	/------------------------------------------------------*/
-    const svg = document.getElementById("preloaderSvg");
-    const svgText = document.querySelector(
-      ".hero-section .intro_text svg text"
-    );
-    const tl = gsap.timeline({
-      onComplete: startStrokeAnimation,
-    });
-    const curve = "M0 502S175 272 500 272s500 230 500 230V0H0Z";
-    const flat = "M0 2S175 1 500 1s500 1 500 1V0H0Z";
-
-    tl.to(".preloader-heading .load-text , .preloader-heading .cont", {
-      delay: 1.5,
-      y: -100,
-      opacity: 0,
-    });
-    tl.to(svg, {
-      duration: 0.5,
-      attr: { d: curve },
-      ease: "power2.easeIn",
-    }).to(svg, {
-      duration: 0.5,
-      attr: { d: flat },
-      ease: "power2.easeOut",
-    });
-    tl.to(".preloader", {
-      y: -1500,
-    });
-    tl.to(".preloader", {
-      zIndex: -1,
-      display: "none",
-    });
-
-    function startStrokeAnimation() {
-      // Add a class or directly apply styles to trigger the stroke animation
-      svgText.classList.add("animate-stroke");
-    }
-
-    /*------------------------------------------------------
-  	/  Services Hover BG
-  	/------------------------------------------------------*/
-    function service_animation() {
-      var active_bg = $(".services-widget .active-bg");
-      var element = $(".services-widget .current");
-      $(".services-widget .service-item").on("mouseenter", function () {
-        var e = $(this);
-        activeService(active_bg, e);
-      });
-      $(".services-widget").on("mouseleave", function () {
-        element = $(".services-widget .current");
-        activeService(active_bg, element);
-        element.closest(".service-item").siblings().removeClass("mleave");
-      });
-      activeService(active_bg, element);
-    }
-    service_animation();
-
-    function activeService(active_bg, e) {
-      if (!e.length) {
-        return false;
-      }
-      var topOff = e.offset().top;
-      var height = e.outerHeight();
-      var menuTop = $(".services-widget").offset().top;
-      e.closest(".service-item").removeClass("mleave");
-      e.closest(".service-item").siblings().addClass("mleave");
-      active_bg.css({ top: topOff - menuTop + "px", height: height + "px" });
-    }
-
-    $(".services-widget .service-item").on("click", function () {
-      $(".services-widget .service-item").removeClass("current");
-      $(this).addClass("current");
-    });
-
-    /*------------------------------------------------------
-  	/  Portfolio Filter BG Color
-  	/------------------------------------------------------*/
-    function filter_animation() {
-      var active_bg = $(".portfolio-filter .button-group .active-bg");
-      var element = $(".portfolio-filter .button-group .active");
-      $(".portfolio-filter .button-group button").on("click", function () {
-        var e = $(this);
-        activeFilterBtn(active_bg, e);
-      });
-      activeFilterBtn(active_bg, element);
-    }
-    filter_animation();
-
-    function activeFilterBtn(active_bg, e) {
-      if (!e.length) {
-        return false;
-      }
-      var leftOff = e.offset().left;
-      var width = e.outerWidth();
-      var menuLeft = $(".portfolio-filter .button-group").offset().left;
-      e.siblings().removeClass("active");
-      e.closest("button")
-        .siblings()
-        .addClass(".portfolio-filter .button-group");
-      active_bg.css({ left: leftOff - menuLeft + "px", width: width + "px" });
-    }
-
-    /*------------------------------------------------------
-  	/  Funfact
-  	/------------------------------------------------------*/
-    if ($(".odometer").length > 0) {
-      $(".odometer").appear(function () {
-        var odo = $(".odometer");
-        odo.each(function () {
-          var countNumber = $(this).attr("data-count");
-          $(this).html(countNumber);
+    "use strict";
+    /* preventDefault
+  -------------------------------------------------------------------------*/
+    const preventDefault = () => {
+        $(".link-no-action").on("click", function (e) {
+            e.preventDefault();
         });
-      });
-    }
+    };
 
-    // Form Validation
-    /* contact form */
-    if ($("#contact-form").length > 0) {
-      $("#contact-form").validate({
-        rules: {
-          conName: "required",
-          conEmail: {
-            required: true,
-            email: true,
-          },
-        },
+    /* headerFixed
+  -------------------------------------------------------------------------*/
+    const headerFixed = () => {
+        const header = document.querySelector(".header-fixed");
+        if (!header) return;
+        let isFixed = false;
+        const scrollThreshold = 1;
+        const handleScroll = () => {
+            const shouldBeFixed = window.scrollY >= scrollThreshold;
+            if (shouldBeFixed !== isFixed) {
+                header.classList.toggle("is-fixed", shouldBeFixed);
+                isFixed = shouldBeFixed;
+            }
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll();
+    };
 
-        messages: {
-          conName: "Enter your name.",
-          conEmail: "Enter a valid email.",
-        },
-        submitHandler: function (form) {
-          // start ajax request
-          $.ajax({
-            type: "POST",
-            url: "assets/mail/contact-form.php",
-            data: $("#contact-form").serialize(),
-            cache: false,
-            success: function (data) {
-              if (data == "Y") {
-                $("#message_sent").modal("show");
-                $("#contact-form").trigger("reset");
-              } else {
-                $("#message_fail").modal("show");
-              }
-            },
-          });
-        },
-      });
-    }
-    /* !contact form */
-  });
+    /* infiniteslide
+    ------------------------------------------------------------------------------------- */
+    const infiniteslide = () => {
+        if ($(".infiniteslide").length > 0) {
+            $(".infiniteslide").each(function () {
+                var $this = $(this);
+                var style = $this.data("style") || "left";
+                var clone = $this.data("clone") || 4;
+                var speed = $this.data("speed") || 100;
+                $this.infiniteslide({
+                    speed: speed,
+                    direction: style,
+                    clone: clone,
+                });
+            });
+        }
+    };
+
+    /* Counter Animation
+    ------------------------------------------------------------------------------------- */
+    const animateCounters = () => {
+        $(window).on("scroll", function () {
+            $(".counter-item").each(function () {
+                const $item = $(this);
+                if ($item.data("animated")) return;
+                const oTop = $item.offset().top - window.innerHeight;
+                if ($(window).scrollTop() > oTop) {
+                    $item.find(".numberCount").each(function () {
+                        const $this = $(this);
+                        const countTo = parseInt($this.data("count"), 10) || 0;
+                        const duration =
+                            parseInt($this.data("duration"), 10) || 2000;
+                        $({ countNum: 0 }).animate(
+                            { countNum: countTo },
+                            {
+                                duration: duration,
+                                easing: "swing",
+                                step: function () {
+                                    const num = Math.floor(this.countNum);
+                                    $this.text(String(num).padStart(2, "0"));
+                                },
+                                complete: function () {
+                                    const num = this.countNum;
+                                    $this.text(String(num).padStart(2, "0"));
+                                },
+                            }
+                        );
+                    });
+                    $item.data("animated", true);
+                }
+            });
+        });
+    };
+
+    /* effect_button
+  -------------------------------------------------------------------------*/
+    var effect_button = () => {
+        $(".btn-hover-animation-fill").each(function () {
+            var button_width = $(this).outerWidth();
+            $(this).css("--button-width", button_width + "px");
+        });
+        $(".btn-hover-animation-fill")
+            .on("mouseenter", function (e) {
+                var parentOffset = $(this).offset(),
+                    relX = e.pageX - parentOffset.left,
+                    relY = e.pageY - parentOffset.top;
+                $(this).find(".bg-effect").css({ top: relY, left: relX });
+            })
+            .on("mouseout", function (e) {
+                var parentOffset = $(this).offset(),
+                    relX = e.pageX - parentOffset.left,
+                    relY = e.pageY - parentOffset.top;
+                $(this).find(".bg-effect").css({ top: relY, left: relX });
+            });
+    };
+
+    /* effect_button
+  -------------------------------------------------------------------------*/
+    var animation = function () {
+        if ($(".wow").length > 0) {
+            var wow = new WOW({
+                boxClass: "wow",
+                animateClass: "animated",
+                offset: 0,
+                mobile: false,
+                live: true,
+            });
+            wow.init();
+        }
+    };
+
+    /* effectHoverButton
+  ------------------------------------------------------------------------------------- */
+    const effectHoverButton = () => {
+        if (!$(".btn-hover").length) return;
+        const all_btns = gsap.utils.toArray(".btn_wrapper");
+        if (all_btns.length > 0) {
+            var all_btn = gsap.utils.toArray(".btn_wrapper");
+        }
+        const all_btn_cirlce = gsap.utils.toArray(".btn-item");
+        all_btn.forEach((btn, i) => {
+            $(btn).mousemove(function (e) {
+                callParallax(e);
+            });
+            function callParallax(e) {
+                parallaxIt(e, all_btn_cirlce[i], 80);
+            }
+
+            function parallaxIt(e, target, movement) {
+                var $this = $(btn);
+                var relX = e.pageX - $this.offset().left;
+                var relY = e.pageY - $this.offset().top;
+
+                gsap.to(target, 0.5, {
+                    x: ((relX - $this.width() / 2) / $this.width()) * movement,
+                    y:
+                        ((relY - $this.height() / 2) / $this.height()) *
+                        movement,
+                    ease: Power2.easeOut,
+                });
+            }
+            $(btn).mouseleave(function (e) {
+                gsap.to(all_btn_cirlce[i], 0.5, {
+                    x: 0,
+                    y: 0,
+                    ease: Power2.easeOut,
+                });
+            });
+        });
+    };
+
+    /* oneNavOnePage
+  -------------------------------------------------------------------------------------*/
+    const oneNavOnePage = () => {
+        if (!$(".section-onepage").length) return;
+
+        const $navLinks = $(".nav_link");
+        const $sections = $(".section");
+
+        $navLinks.on("click", function (e) {
+            e.preventDefault();
+
+            const target = $(this).attr("href");
+            const $target = $(target);
+            if (!$target.length) return;
+
+            const headerHeight = $(".header-fixed").outerHeight() || 0;
+            const offsetTop = $target.offset().top - headerHeight;
+
+            $("html, body").animate({ scrollTop: offsetTop }, 0);
+
+            $(".side-menu-mobile,.offcanvas-backdrop,.offcanvas").removeClass(
+                "show"
+            );
+            $(".side-toggle ").removeClass("open");
+            $(".overlay-popup").removeClass("show");
+            $("body").removeAttr("style");
+
+            if ($(this).hasClass("open-popup")) {
+                openYourPopup();
+            }
+        });
+
+        const updateActiveMenu = () => {
+            const scrollTop = $(window).scrollTop();
+            const headerHeight = $(".header-fixed").outerHeight() || 0;
+            let current = "";
+            let currentIndex = -1;
+
+            $sections.each(function (index) {
+                const $section = $(this);
+                const top = $section.offset().top - headerHeight;
+                const bottom = top + $section.outerHeight();
+
+                if (scrollTop >= top && scrollTop < bottom) {
+                    current = $section.attr("id");
+                    currentIndex = index;
+                }
+            });
+            $navLinks
+                .removeClass("active")
+                .filter(`[href="#${current}"]`)
+                .addClass("active");
+
+            $sections.removeClass("dimmed");
+
+            if (currentIndex !== -1) {
+                $sections.each(function (index) {
+                    if (index < currentIndex) {
+                        $(this).addClass("dimmed");
+                    }
+                });
+            }
+        };
+
+        $(window).on("scroll", updateActiveMenu);
+        $(window).on("resize", updateActiveMenu);
+        updateActiveMenu();
+    };
+
+    /* effectParallax
+  -------------------------------------------------------------------------------------*/
+    const effectParallax = () => {
+        if (!$(".parallax-img").length) return;
+        const images = document.querySelectorAll(".parallax-img");
+        new Ukiyo(images, {
+            scale: 1.5,
+            speed: 1.5,
+            externalRAF: !1,
+        });
+    };
+
+    /* openMenu
+  -------------------------------------------------------------------------------------*/
+    const openMenu = () => {
+        if (!$(".side-menu-mobile").length) return;
+
+        $(".side-info-close,.offcanvas-overlay").on("click", function () {
+            $(".side-menu-mobile").removeClass("show");
+            $(".offcanvas-overlay").removeClass("overlay-open");
+        });
+
+        $(".side-toggle").on("click", function () {
+            $(".side-toggle").toggleClass("open");
+            $(".side-menu-mobile").toggleClass("show");
+            $(".offcanvas-overlay").toggleClass("overlay-open");
+        });
+    };
+
+    /* goTop
+  -------------------------------------------------------------------------------------*/
+    const goTop = () => {
+        if ($("div").hasClass("progress-wrap")) {
+            var progressPath = document.querySelector(".progress-wrap path");
+            var pathLength = progressPath.getTotalLength();
+            progressPath.style.transition =
+                progressPath.style.WebkitTransition = "none";
+            progressPath.style.strokeDasharray = pathLength + " " + pathLength;
+            progressPath.style.strokeDashoffset = pathLength;
+            progressPath.getBoundingClientRect();
+            progressPath.style.transition =
+                progressPath.style.WebkitTransition =
+                    "stroke-dashoffset 10ms linear";
+            var updateprogress = function () {
+                var scroll = $(window).scrollTop();
+                var height = $(document).height() - $(window).height();
+                var progress = pathLength - (scroll * pathLength) / height;
+                progressPath.style.strokeDashoffset = progress;
+            };
+            updateprogress();
+            $(window).scroll(updateprogress);
+            var offset = 200;
+            var duration = 0;
+            jQuery(window).on("scroll", function () {
+                if (jQuery(this).scrollTop() > offset) {
+                    jQuery(".progress-wrap").addClass("active-progress");
+                } else {
+                    jQuery(".progress-wrap").removeClass("active-progress");
+                }
+            });
+            jQuery(".progress-wrap").on("click", function (event) {
+                event.preventDefault();
+                jQuery("html, body").animate({ scrollTop: 0 }, duration);
+                return false;
+            });
+        }
+    };
+
+
+
+    // DOM Ready
+    $(function () {
+        preventDefault();
+        headerFixed();
+        infiniteslide();
+        animateCounters();
+        effect_button();
+        animation();
+        effectHoverButton();
+        oneNavOnePage();
+        effectParallax();
+        openMenu();
+        goTop();
+    });
 })(jQuery);
